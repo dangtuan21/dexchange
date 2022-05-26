@@ -5,7 +5,7 @@ const Zrx = artifacts.require('mocks/Zrx.sol');
 const Dex = artifacts.require("Dex.sol");
 
 const [DAI, BAT, REP, ZRX] = ['DAI', 'BAT', 'REP', 'ZRX']
-.map(ticker => web3.utils.fromAscii(ticker));
+  .map(ticker => web3.utils.fromAscii(ticker));
 
 const SIDE = {
   BUY: 0,
@@ -19,16 +19,15 @@ module.exports = async function (deployer, _network, accounts) {
       method: 'evm_increaseTime',
       params: [seconds],
       id: 0,
-    }, () => {});
+    }, () => { });
     await web3.currentProvider.send({
       jsonrpc: '2.0',
       method: 'evm_mine',
       params: [],
       id: 0,
-    }, () => {});
+    }, () => { });
   }
-  // const [owner, trader1, trader2, trader3, trader4, _] = accounts;
-  const [trader1, trader2, trader3, trader4] = [accounts[1], accounts[2], accounts[3], accounts[4]];
+  const [trader1, trader2, trader3, trader4, _] = accounts;
   await increaseTime(2);
 
   await Promise.all(
@@ -40,19 +39,12 @@ module.exports = async function (deployer, _network, accounts) {
   );
   await increaseTime(2);
 
-  // await Promise.all([
-  //   dex.addToken(DAI, dai.address),
-  //   dex.addToken(BAT, bat.address),
-  //   dex.addToken(REP, rep.address),
-  //   dex.addToken(ZRX, zrx.address)
-  // ]);
-  await dex.addToken(DAI, dai.address);
-  await dex.addToken(BAT, bat.address);
-  await dex.addToken(REP, rep.address);
-  await dex.addToken(ZRX, zrx.address);
-
-  // const tokens = await dex.getTokens();
-
+  await Promise.all([
+    dex.addToken(DAI, dai.address),
+    dex.addToken(BAT, bat.address),
+    dex.addToken(REP, rep.address),
+    dex.addToken(ZRX, zrx.address)
+  ]);
 
   const amount = web3.utils.toWei('6000');
   const seedTokenBalance = async (token, trader) => {
@@ -60,60 +52,40 @@ module.exports = async function (deployer, _network, accounts) {
     await token.approve(
       dex.address,
       amount, {
-        from: trader
-      }
+      from: trader
+    }
     );
     const ticker = await token.symbol();
     await dex.deposit(
       amount,
       web3.utils.fromAscii(ticker), {
       // DAI, {
-        from: trader
-      }
+      from: trader
+    }
     );
   };
 
-  
-  // await Promise.all(
-  //   [dai, bat, rep, zrx].map(
-  //     token => seedTokenBalance(token, trader1)
-  //   )
-  // );
-  // await Promise.all(
-  //   [dai, bat, rep, zrx].map(
-  //     token => seedTokenBalance(token, trader2)
-  //   )
-  // );
-  // await Promise.all(
-  //   [dai, bat, rep, zrx].map(
-  //     token => seedTokenBalance(token, trader3)
-  //   )
-  // );
-  // await Promise.all(
-  //   [dai, bat, rep, zrx].map(
-  //     token => seedTokenBalance(token, trader4)
-  //   )
-  // );
 
-  await seedTokenBalance(dai, trader1);
-  await seedTokenBalance(bat, trader1);
-  await seedTokenBalance(rep, trader1);
-  await seedTokenBalance(zrx, trader1);
-
-  await seedTokenBalance(dai, trader2);
-  await seedTokenBalance(bat, trader2);
-  await seedTokenBalance(rep, trader2);
-  await seedTokenBalance(zrx, trader2);
-
-  await seedTokenBalance(dai, trader3);
-  await seedTokenBalance(bat, trader3);
-  await seedTokenBalance(rep, trader3);
-  await seedTokenBalance(zrx, trader3);
-
-  await seedTokenBalance(dai, trader4);
-  await seedTokenBalance(bat, trader4);
-  await seedTokenBalance(rep, trader4);
-  await seedTokenBalance(zrx, trader4);
+  await Promise.all(
+    [dai, bat, rep, zrx].map(
+      token => seedTokenBalance(token, trader1)
+    )
+  );
+  await Promise.all(
+    [dai, bat, rep, zrx].map(
+      token => seedTokenBalance(token, trader2)
+    )
+  );
+  await Promise.all(
+    [dai, bat, rep, zrx].map(
+      token => seedTokenBalance(token, trader3)
+    )
+  );
+  await Promise.all(
+    [dai, bat, rep, zrx].map(
+      token => seedTokenBalance(token, trader4)
+    )
+  );
 
   //create trades
   await dex.createLimitOrder(BAT, 1000, 10, SIDE.BUY, {
@@ -182,7 +154,7 @@ module.exports = async function (deployer, _network, accounts) {
   //create orders
   await dex.createLimitOrder(BAT, 1400, 10, SIDE.BUY, {
     from: trader1
-  });  
+  });
   await dex.createLimitOrder(BAT, 1200, 11, SIDE.BUY, {
     from: trader2
   });

@@ -1,11 +1,11 @@
 import React from 'react';
 import Moment from 'react-moment';
 
-function AllOrders({orders}) {
+function AllOrders({ orders }) {
   const renderList = (orders, side, className) => {
     return (
       <>
-        <table className={`table table-striped mb-0 order-list ${className}`}>
+        <table className={`table mb-0 order-list ${className}`}>
           <thead>
             <tr className="table-title order-list-title">
               <th colSpan='3'>{side}</th>

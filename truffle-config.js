@@ -67,6 +67,11 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true,
     },
+    ganache: {
+      host: "127.0.0.1", // Localhost (default: none)
+      port: 7545, // Standard Ethereum port (default: none)
+      network_id: "*", // Any network (default: none)
+    },
     development: {
       host: "127.0.0.1", // Localhost (default: none)
       port: 9545, // Standard Ethereum port (default: none)
@@ -130,13 +135,13 @@ module.exports = {
   // $ truffle migrate --reset --compile-all
   //
   // db: {
-    // enabled: false,
-    // host: "127.0.0.1",
-    // adapter: {
-    //   name: "sqlite",
-    //   settings: {
-    //     directory: ".db"
-    //   }
-    // }
+  // enabled: false,
+  // host: "127.0.0.1",
+  // adapter: {
+  //   name: "sqlite",
+  //   settings: {
+  //     directory: ".db"
+  //   }
+  // }
   // }
 };

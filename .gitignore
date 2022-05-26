@@ -1,6 +1,7 @@
 build
 .secret*.*
 client/node_modules
+client/src/contracts
 # Logs
 logs
 *.log
