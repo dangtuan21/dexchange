@@ -140,7 +140,7 @@ contract('Dex', (accounts) => {
       'balance too low'
     );
   });
-  it('should create limit order', async () => {
+  it('6. should create limit order', async () => {
     await dex.deposit(
       web3.utils.toWei('100'),
       DAI, {
