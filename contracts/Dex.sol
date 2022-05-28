@@ -109,6 +109,7 @@ contract Dex {
             'balance too low'
         ); 
         traderBalances[msg.sender][ticker] = traderBalances[msg.sender][ticker].sub(amount);
+        //  transfer from this dex contract to msg.sender
         IERC20(tokens[ticker].tokenAddress).transfer(msg.sender, amount);
     }
     
